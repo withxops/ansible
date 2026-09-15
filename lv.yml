@@ -1,0 +1,31 @@
+---
+- name: Creating and Using LV
+  hosts: all
+  tasks:
+    - block:
+        - name: creating lv 1500m
+          community.general.lvol:
+           vg: myvg
+           lv: mylv
+           size: 1500m
+        - name: Formatting it with ext4 extention
+          community.general.filesystem:
+            fstype: ext4
+            dev: /dev/myvg/mylv
+      rescue:
+        - name: debug the msg
+          ansible.builtin.debug:
+            msg: "Could not create logical volume of that size"
+        - name: creating lv 800m
+          community.general.lvol:
+           vg: myvg
+           lv: mylv
+           size: 800m
+        - name: Formatting it with ext4 extention
+          community.general.filesystem:
+            fstype: ext4
+            dev: /dev/myvg/mylv
+      when: ansible_lvm.vgs.myvg is defined
+    - debug: 
+        msg: "volume group does not exist"
+      when: ansible_lvm.vgs.myvg is not defined
