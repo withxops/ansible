@@ -1,0 +1,22 @@
+---
+- name: Configure Repositories
+  hosts: all
+  tasks:
+  - name: Add multiple repositories into the same file (1/2)
+    ansible.builtin.yum_repository:
+      name: EX294_BASE
+      description: EX294 base software
+      file: EX294_BASE
+      baseurl: https://download.fedoraproject.org/pub/epel/$release>
+      gpgcheck: yes
+      gpgkey: http://domain17.example.com/RHEL/RFM-GPG-KEY-release-key
+      enabled: yes
+  - name: Adding Appstream
+    ansible.builtin.yum_repository:
+      name: EX294_STREAM
+      description: EX294 stream software
+      file: EX294_STREAM
+      baseurl: https://download.fedoraproject.org/pub/epel/$release>
+      gpgcheck: yes
+      gpgkey: http://domain17.example.com/RHEL/RFM-GPG-KEY-release-key
+      enabled: yes
