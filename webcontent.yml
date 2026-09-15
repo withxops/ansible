@@ -1,0 +1,25 @@
+---
+- hosts: dev
+  tasks:
+    - name: ensure webdev group is present
+      ansible.builtin.group:
+        name: webdev
+        state: present
+
+    - name: create /webdev directory
+      ansible.builtin.file:
+        path: /webdev
+        state: directory
+        mode: '2775'
+        group: webdev
+   
+    - name: creating sym link
+      ansible.builtin.file:
+        src: /webdev
+        dest: /var/www/html/webdev
+        state: link       
+    - name: creating index.html
+      ansible.builtin.copy:
+        content: "Development"
+        dest: /var/www/html/index.html
+        setype: "httpd_sys_content_t"
