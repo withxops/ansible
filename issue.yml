@@ -1,0 +1,19 @@
+---
+- hosts: dev
+  tasks:
+    - name: copying file content in dev
+      ansible.builtin.copy:
+        content: "Development"
+        dest: /etc/isuues
+- hosts: test 
+  tasks:
+    - name: copying file content in test
+      ansible.builtin.copy:
+        content: "Test"
+        dest: /etc/isuues
+- hosts: prod
+  tasks:
+    - name: copying file content in prod
+      ansible.builtin.copy:
+        content: "Production"
+        dest: /etc/isuues
