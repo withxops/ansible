@@ -1,0 +1,6 @@
+---
+- src: http://node3/phpinfo.tar 
+  name: phpinfo
+
+- src: http://node3/haproxy.tar
+  name: balancer
